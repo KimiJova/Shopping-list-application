@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">sopinglista</string>
+    <string name="login1">login</string>
+    <string name="register1">register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="gmail">Gmail        </string>
+    <string name="new_list">new list</string>
+    <string name="see_my_lists">see my lists</string>
+    <string name="ok">ok</string>
+    <string name="naslov_liste">Naslov liste</string>
+    <string name="naslov">NASLOV</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="save">SAVE</string>
+    <string name="nalov">Naslov:</string>
+    <string name="shared">Shared:</string>
+    <string name="shared_shopping_list">Shared Shopping list</string>
+    <string name="add">ADD</string>
+    <string name="welcome">WELCOME</string>
+</resources>
