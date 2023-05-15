@@ -2,6 +2,7 @@ package milos.jovanovic.sopinglista;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,10 +14,11 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
-public class ShowListActivity extends AppCompatActivity {
+public class ShowListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String title_SLA;
     private Button button_add_SLA;
+    private Button home;
     private EditText editText_SLA;
     private ListView list_SLA;
     private TextView textView_SLA;
@@ -32,6 +34,8 @@ public class ShowListActivity extends AppCompatActivity {
         button_add_SLA = findViewById(R.id.button_SLA);
         editText_SLA = findViewById(R.id.editText_SLA);
         textView_SLA = findViewById(R.id.name_SLA);
+        home = findViewById(R.id.home2);
+        home.setOnClickListener(this);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -67,5 +71,13 @@ public class ShowListActivity extends AppCompatActivity {
 
         Zadatak[] items = db.readItems(title_SLA);
         adapter.update(items);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.home2){
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
     }
 }

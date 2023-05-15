@@ -53,6 +53,7 @@ public class Login extends Fragment {
     EditText username;
     EditText password;
     Button button_login;
+    Button home;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class Login extends Fragment {
         button_login = n.findViewById(R.id.dugme_login);
         username = n.findViewById(R.id.user_login);
         password = n.findViewById(R.id.pass_login);
+        home = n.findViewById(R.id.home5);
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +89,14 @@ public class Login extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Login failed!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
             }
         });
         // Inflate the layout for this fragment

@@ -17,6 +17,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button b1_welcome;
     private Button b2_welcome;
+    private Button home;
+
     private TextView username;
     private String nasl;
     private ListView lista;
@@ -31,6 +33,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        home = findViewById(R.id.home3);
+        home.setOnClickListener(this);
 
         username = findViewById(R.id.user_welcome);
         Bundle bundle = getIntent().getExtras();
@@ -95,6 +100,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         } else if (view.getId() == R.id.dugme2_welcome) {
             Lists[] lists = db.readMyLists(username.getText().toString());
             adapter.update(lists);
+        } else if(view.getId() == R.id.home3) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         }
     }
 

@@ -17,6 +17,7 @@ public class NewListActivity extends AppCompatActivity implements View.OnClickLi
 
     Button save;
     Button ok;
+    Button home;
     EditText editText_title;
     TextView textView_title;
     DBHelper db;
@@ -36,6 +37,9 @@ public class NewListActivity extends AppCompatActivity implements View.OnClickLi
 
         ok = findViewById(R.id.okdug);
         ok.setOnClickListener(this);
+
+        home = findViewById(R.id.home1);
+        home.setOnClickListener(this);
 
         editText_title = findViewById(R.id.editText_naslov);
         textView_title = findViewById(R.id.naslovliste);
@@ -79,6 +83,9 @@ public class NewListActivity extends AppCompatActivity implements View.OnClickLi
             textView_title = findViewById(R.id.naslovliste);
             textView_title.setText(editText_title.getText().toString());
             editText_title.setText("");
+        } else if (view.getId() == R.id.home1) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         }
     }
 }

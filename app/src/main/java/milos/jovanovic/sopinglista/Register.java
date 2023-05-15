@@ -52,6 +52,7 @@ public class Register extends Fragment {
     }
 
     Button button_register;
+    Button home;
     EditText username, email, password;
 
     @Override
@@ -72,6 +73,7 @@ public class Register extends Fragment {
         username = p.findViewById(R.id.user_register);
         email = p.findViewById(R.id.editText_gmail);
         password = p.findViewById(R.id.editText_pass);
+        home = p.findViewById(R.id.home4);
 
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +90,14 @@ public class Register extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Registration failed!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
             }
         });
         return p;
