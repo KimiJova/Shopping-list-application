@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +30,8 @@ public class Login extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static String LOGIN_URL = LoginActivity.BASE_URL + "/login";
+    private HttpHelper httpHelper;
 
     public Login() {
         // Required empty public constructor
@@ -72,10 +77,14 @@ public class Login extends Fragment {
         username = n.findViewById(R.id.user_login);
         password = n.findViewById(R.id.pass_login);
         home = n.findViewById(R.id.home5);
+        httpHelper = new HttpHelper();
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+                /*
                 DBHelper db = new DBHelper(getActivity(), DBHelper.DB_NAME, null, 1);
 
                 if ((username.getText().toString().equals("admin") && password.getText().toString().equals("admin"))||
@@ -89,6 +98,35 @@ public class Login extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Login failed!", Toast.LENGTH_SHORT).show();
                 }
+                */
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            JSONObject requestJSON = new JSONObject();
+                            requestJSON.put("username", user);
+                            requestJSON.put("password", pass);
+                            boolean jsonObject = httpHelper.postJSONObjectFromURL(LOGIN_URL,requestJSON);
+                            if(jsonObject) {
+                                Intent intent = new Intent(getActivity(),WelcomeActivity.class);
+                                intent.putExtra("username",user);
+                                intent.putExtra("password",pass);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        startActivity(intent);
+                                    }
+                                });
+                            }else{
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getActivity(), "ERROR LOGIN HTTP", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 

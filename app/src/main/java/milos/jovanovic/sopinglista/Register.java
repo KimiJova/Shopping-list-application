@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Register#newInstance} factory method to
@@ -27,6 +31,8 @@ public class Register extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static String REGISTER_URL = LoginActivity.BASE_URL + "/users";
+    private HttpHelper httpHelper;
 
 
     public Register() {
@@ -55,6 +61,8 @@ public class Register extends Fragment {
     Button home;
     EditText username, email, password;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +82,15 @@ public class Register extends Fragment {
         email = p.findViewById(R.id.editText_gmail);
         password = p.findViewById(R.id.editText_pass);
         home = p.findViewById(R.id.home4);
+        httpHelper = new HttpHelper();
 
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String user = username.getText().toString();
+                String em = email.getText().toString();
+                String pass = password.getText().toString();
+                /*
                 DBHelper db = new DBHelper(getActivity(), DBHelper.DB_NAME, null, 1);
                 if (db.doesUserExist(username.getText().toString())) {
                     Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_SHORT).show();
@@ -90,6 +103,37 @@ public class Register extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Registration failed!", Toast.LENGTH_SHORT).show();
                 }
+                */
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            JSONObject requestJSON = new JSONObject();
+                            requestJSON.put("username", user);
+                            requestJSON.put("password", pass);
+                            requestJSON.put("email", em);
+                            boolean jsonObject = httpHelper.postJSONObjectFromURL(REGISTER_URL,requestJSON);
+                            if(jsonObject) {
+                                Intent intent = new Intent(getActivity(),WelcomeActivity.class);
+                                intent.putExtra("username",user);
+                                intent.putExtra("email",em);
+                                intent.putExtra("password",pass);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        startActivity(intent);
+                                    }
+                                });
+                            }else{
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getActivity(), "ERROR REGISTER HTTP", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 

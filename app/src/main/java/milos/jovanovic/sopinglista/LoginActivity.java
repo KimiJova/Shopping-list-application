@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     Button b1;
     Button b2;
+    public static String BASE_URL = "http://192.168.0.14:3000";
 
 
     @Override
